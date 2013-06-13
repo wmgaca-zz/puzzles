@@ -1,0 +1,25 @@
+import sys
+import pickle
+
+fc = open('fibb.txt', 'r').read()
+fc = fc.split('\n')
+
+fd = {}
+for line in fc:
+    if not line: continue
+    parts = line.split(':')[1].split('=')
+    try:
+        fibb, parts = parts
+        fd[long(fibb.strip())] = set([long(x.strip()) for x in parts.split('x')])
+    except:
+        prime = long(parts[0].strip())
+        fd[prime] = set([prime])
+
+d = {}
+
+for fibbnum in sorted(fd.keys()):
+    for factor in fd[fibbnum]:
+        if factor not in d:
+            d[factor] = fibbnum
+
+print d
